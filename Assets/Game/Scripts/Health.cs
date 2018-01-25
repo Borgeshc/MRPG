@@ -5,7 +5,7 @@ using UnityEngine;
 public class Health : MonoBehaviour
 {
     public int maxHealth;
-
+    public GameObject hitEffect;
 
     [HideInInspector]
     public bool isDead;
@@ -21,10 +21,16 @@ public class Health : MonoBehaviour
 	
 	public void TookDamage(int damage)
     {
+        if (isDead) return;
+
         health -= damage;
+
+        if (hitEffect)
+            hitEffect.SetActive(true);
+
         anim.SetTrigger("Hit");
 
-        if(health <= 0 && !isDead)
+        if (health <= 0 && !isDead)
         {
             isDead = true;
             Died();
