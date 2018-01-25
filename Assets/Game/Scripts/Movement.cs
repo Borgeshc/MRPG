@@ -8,6 +8,11 @@ public class Movement : MonoBehaviour
     public float rotationSpeed = 100;
     public float attackMoveSpeed = 1000f;
 
+    public LayerMask targetLayer;
+
+    public Texture2D mainCursor;
+    public Texture2D attackCursor;
+
     Vector3 input;
     Vector3 targetRotation;
     CharacterController cc;
@@ -46,8 +51,26 @@ public class Movement : MonoBehaviour
         else
             anim.SetBool("IsWalking", false);
 
-        transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.Euler(targetRotation.x,
+        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+        RaycastHit hit;
+        if (Physics.Raycast(ray, out hit, Mathf.Infinity, targetLayer))
+        {
+            if(hit.transform.tag.Equals("Enemy"))
+            {
+                Vector3 direction = (hit.transform.position - transform.position).normalized;
+                Quaternion lookRotation = Quaternion.LookRotation(new Vector3(direction.x, 0, direction.z));
+                transform.rotation = Quaternion.Slerp(transform.rotation, lookRotation, Time.deltaTime * rotationSpeed);
+
+                Cursor.SetCursor(attackCursor, Vector2.zero, CursorMode.Auto);
+            }
+        }
+        else
+        {
+            transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.Euler(targetRotation.x,
             Mathf.Round(targetRotation.y / 45) * 45, targetRotation.z), Time.fixedDeltaTime * rotationSpeed);
-        
+
+
+            Cursor.SetCursor(mainCursor, Vector2.zero, CursorMode.Auto);
+        }
     }
 }

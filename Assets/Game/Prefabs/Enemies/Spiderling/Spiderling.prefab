@@ -860,7 +860,7 @@ GameObject:
   - component: {fileID: 114806517005656166}
   - component: {fileID: 114720904843886210}
   - component: {fileID: 195967002279455348}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Spiderling
   m_TagString: Enemy
   m_Icon: {fileID: 0}
@@ -1147,9 +1147,9 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1879615017473190}
-  m_LocalRotation: {x: 0, y: 1, z: 0, w: 0}
-  m_LocalPosition: {x: 1.83, y: 0, z: 7.08}
-  m_LocalScale: {x: 2, y: 2, z: 2}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 17.61, y: 2, z: -0.5500002}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4439650614636786}
   - {fileID: 4694607983677508}
@@ -1157,7 +1157,7 @@ Transform:
   - {fileID: 4136372424188500}
   m_Father: {fileID: 0}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 180, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &4110252139816758
 Transform:
   m_ObjectHideFlags: 1
@@ -2022,6 +2022,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   minAttackFrequency: 1
   maxAttackFrequency: 2
+  pullRadius: 15
 --- !u!114 &114765552358549432
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -2059,6 +2060,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   maxHealth: 30
   hitEffect: {fileID: 1449597152067518}
+  despawnTime: 5
+  dissolveMaterial: {fileID: 2100000, guid: 83e3102d853386645bddddfac2b9f39d, type: 2}
   isDead: 0
 --- !u!114 &114854774573532594
 MonoBehaviour:
@@ -2086,7 +2089,7 @@ SkinnedMeshRenderer:
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
   m_Materials:
-  - {fileID: 2100000, guid: 12588dc4009052641a185bfd4ff7f51e, type: 2}
+  - {fileID: 2100000, guid: 2f320c670099a74458394a42400d3202, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0

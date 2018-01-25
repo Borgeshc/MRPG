@@ -7,6 +7,7 @@ public class AI : MonoBehaviour
 {
     public float minAttackFrequency = 1;
     public float maxAttackFrequency = 2;
+    public float pullRadius = 10f;
 
     NavMeshAgent agent;
     
@@ -32,6 +33,11 @@ public class AI : MonoBehaviour
             agent.isStopped = true;
             return;
         }
+
+        float distance = Vector3.Distance(transform.position, player.transform.position);
+
+        if (distance > pullRadius) return;
+
         agent.SetDestination(player.transform.position);
 
         if(agent.velocity == Vector3.zero)
@@ -39,7 +45,6 @@ public class AI : MonoBehaviour
         else
             anim.SetBool("IsWalking", true);
 
-        float distance = Vector3.Distance(transform.position, player.transform.position);
 
         if(distance <= agent.stoppingDistance)
         {
@@ -65,5 +70,11 @@ public class AI : MonoBehaviour
         float randomAttackFrequency = Random.Range(minAttackFrequency, maxAttackFrequency);
         yield return new WaitForSeconds(randomAttackFrequency);
         attacking = false;
+    }
+
+    private void OnDrawGizmosSelected()
+    {
+        Gizmos.color = Color.red;
+        Gizmos.DrawWireSphere(transform.position, pullRadius);
     }
 }
