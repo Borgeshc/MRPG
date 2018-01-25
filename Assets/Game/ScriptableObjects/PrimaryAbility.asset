@@ -12,7 +12,8 @@ MonoBehaviour:
   m_Name: PrimaryAbility
   m_EditorClassIdentifier: 
   abilityName: PrimaryAbility
-  abilityDamage: 0
+  abilityDamage: 25
   abilityCooldown: 0.5
   abilityEffect: {fileID: 0}
+  numberOfAnimations: 7
   abilityType: 1

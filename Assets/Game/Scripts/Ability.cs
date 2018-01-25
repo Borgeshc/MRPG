@@ -6,9 +6,10 @@ using UnityEngine;
 public class Ability : ScriptableObject
 {
     public string abilityName;
-    public int abilityDamage;
     public float abilityCooldown;
     public GameObject abilityEffect;
+    public int numberOfAnimations;
+
     public enum AbilityType
     {
         None,
@@ -32,12 +33,19 @@ public class Ability : ScriptableObject
 
     public void ActivateAbility()
     {
-        Debug.Log(abilityType.ToString() + " " + abilityActive);
         if (!abilityActive)
         {
             abilityActive = true;
             Movement.attacking = true;
-            anim.SetTrigger(abilityType.ToString());
+
+            if(abilityType == AbilityType.PrimaryAbility)
+            {
+                int randomAbility = Random.Range(0, numberOfAnimations);
+                anim.SetTrigger(abilityType.ToString() + randomAbility);
+            }
+            else
+                anim.SetTrigger(abilityType.ToString());
+
             CoroutineUtility.instance.StartCoroutine(AbilityCooldown());
         }
     }

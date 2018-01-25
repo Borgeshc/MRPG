@@ -17,6 +17,8 @@ public class AbilityLoadout : MonoBehaviour
 
     [Space, Space]
     public Animator anim;
+    public Collider damageCollider;
+    public TrailRenderer weaponTrail;
 
     public bool isMobile;
 
@@ -79,5 +81,25 @@ public class AbilityLoadout : MonoBehaviour
                 abilityFour.ActivateAbility();
                 break;
         }
+    }
+
+    public void DealDamage()
+    {
+        damageCollider.enabled = true;
+    }
+
+    public void StopDealingDamage()
+    {
+        damageCollider.enabled = false;
+    }
+
+    public void ActivateTrail()
+    {
+        weaponTrail.enabled = true;
+    }
+
+    public void DeactivateTrail()
+    {
+        weaponTrail.enabled = false;
     }
 }
