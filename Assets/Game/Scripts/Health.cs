@@ -22,7 +22,6 @@ public class Health : MonoBehaviour
     {
         anim = GetComponent<Animator>();
         rend = GetComponentInChildren<SkinnedMeshRenderer>();
-        print(rend);
         health = maxHealth;
 	}
 

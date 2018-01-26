@@ -13,6 +13,11 @@ public class Movement : MonoBehaviour
     public Texture2D mainCursor;
     public Texture2D attackCursor;
 
+    public AudioSource footstepSource;
+    public AudioClip[] footsteps;
+
+    public static bool hasTarget;
+
     Vector3 input;
     Vector3 targetRotation;
     CharacterController cc;
@@ -62,6 +67,7 @@ public class Movement : MonoBehaviour
                 transform.rotation = Quaternion.Slerp(transform.rotation, lookRotation, Time.deltaTime * rotationSpeed);
 
                 Cursor.SetCursor(attackCursor, Vector2.zero, CursorMode.Auto);
+                hasTarget = true;
             }
         }
         else
@@ -71,6 +77,14 @@ public class Movement : MonoBehaviour
 
 
             Cursor.SetCursor(mainCursor, Vector2.zero, CursorMode.Auto);
+            hasTarget = false;
         }
+    }
+
+    public void Step()
+    {
+        if (attacking) return;
+        AudioClip footstep = footsteps[Random.Range(0, footsteps.Length)];
+        footstepSource.PlayOneShot(footstep);
     }
 }

@@ -20,6 +20,9 @@ public class AbilityLoadout : MonoBehaviour
     public Collider damageCollider;
     public TrailRenderer weaponTrail;
 
+    public AudioSource attackSource;
+    public AudioClip[] missSounds;
+
     public bool isMobile;
 
     private void Start()
@@ -86,6 +89,12 @@ public class AbilityLoadout : MonoBehaviour
     public void DealDamage()
     {
         damageCollider.enabled = true;
+
+        if(!Movement.hasTarget)
+        {
+            AudioClip missSound = missSounds[Random.Range(0, missSounds.Length)];
+            attackSource.PlayOneShot(missSound);
+        }
     }
 
     public void StopDealingDamage()
