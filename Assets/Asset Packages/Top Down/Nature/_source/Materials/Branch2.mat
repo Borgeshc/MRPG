@@ -7,12 +7,12 @@ Material:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_Name: Branch2
-  m_Shader: {fileID: 4800000, guid: db5b1a38bc85fc44eb32398fa35cb0dc, type: 3}
+  m_Shader: {fileID: 4800000, guid: 211bee7396d428d47b05c785479e224f, type: 3}
   m_ShaderKeywords: 
   m_LightmapFlags: 5
   m_EnableInstancingVariants: 0
   m_DoubleSidedGI: 0
-  m_CustomRenderQueue: 2450
+  m_CustomRenderQueue: -1
   stringTagMap: {}
   disabledShaderPasses: []
   m_SavedProperties:
