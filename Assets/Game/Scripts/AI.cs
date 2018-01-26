@@ -9,6 +9,10 @@ public class AI : MonoBehaviour
     public float maxAttackFrequency = 2;
     public float pullRadius = 10f;
 
+    public AudioSource source;
+    public AudioClip[] pulledSounds;
+    public AudioClip[] attackSounds;
+
     NavMeshAgent agent;
     
     Animator anim;
@@ -17,6 +21,7 @@ public class AI : MonoBehaviour
 
     Coroutine attack;
     bool attacking;
+    bool pulled;
 
     void Start ()
     {
@@ -37,6 +42,12 @@ public class AI : MonoBehaviour
         float distance = Vector3.Distance(transform.position, player.transform.position);
 
         if (distance > pullRadius) return;
+        else if (!pulled)
+        {
+            pulled = true;
+            AudioClip pulledSound = pulledSounds[Random.Range(0, pulledSounds.Length)];
+            source.PlayOneShot(pulledSound);
+        }
 
         agent.SetDestination(player.transform.position);
 
@@ -66,6 +77,9 @@ public class AI : MonoBehaviour
 
     IEnumerator Attack()
     {
+        AudioClip attackSound = attackSounds[Random.Range(0, attackSounds.Length)];
+        source.PlayOneShot(attackSound);
+
         anim.SetTrigger("Attack");
         float randomAttackFrequency = Random.Range(minAttackFrequency, maxAttackFrequency);
         yield return new WaitForSeconds(randomAttackFrequency);
