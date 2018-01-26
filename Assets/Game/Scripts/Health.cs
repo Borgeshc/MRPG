@@ -62,6 +62,11 @@ public class Health : MonoBehaviour
     {
         anim.SetBool("Died", true);
 
+        if(Movement.enemies.Contains(transform))
+        {
+            Movement.enemies.Remove(transform);
+        }
+
         AudioClip deathSound = deathSounds[Random.Range(0, deathSounds.Length)];
         source.PlayOneShot(deathSound);
 
