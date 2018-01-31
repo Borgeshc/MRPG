@@ -22,6 +22,8 @@ public class Ability : ScriptableObject
 
     public AbilityType abilityType;
 
+    string activeAbility;
+
     bool abilityActive;
     Animator anim;
 
@@ -42,9 +44,13 @@ public class Ability : ScriptableObject
             {
                 int randomAbility = Random.Range(0, numberOfAnimations);
                 anim.SetTrigger(abilityType.ToString() + randomAbility);
+                activeAbility = abilityType.ToString() + randomAbility;
             }
             else
+            {
                 anim.SetTrigger(abilityType.ToString());
+                activeAbility = abilityType.ToString();
+            }
 
             CoroutineUtility.instance.StartCoroutine(AbilityCooldown());
         }
@@ -55,5 +61,6 @@ public class Ability : ScriptableObject
         yield return new WaitForSeconds(abilityCooldown);
         Movement.attacking = false;
         abilityActive = false;
+        anim.ResetTrigger(activeAbility);
     }
 }

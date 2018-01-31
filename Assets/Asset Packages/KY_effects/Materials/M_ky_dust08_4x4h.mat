@@ -7,7 +7,7 @@ Material:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_Name: M_ky_dust08_4x4h
-  m_Shader: {fileID: 4800000, guid: a8c23b0e240aa485ca20201a604840ef, type: 3}
+  m_Shader: {fileID: 200, guid: 0000000000000000f000000000000000, type: 0}
   m_ShaderKeywords: _EMISSION _USETEXCOLOR_ON
   m_LightmapFlags: 1
   m_EnableInstancingVariants: 0
@@ -108,5 +108,5 @@ Material:
     m_Colors:
     - _Color: {r: 1, g: 1, b: 1, a: 1}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
-    - _TintColor: {r: 0.6544118, g: 0.6544118, b: 0.6544118, a: 0.534}
+    - _TintColor: {r: 0.907708, g: 1, b: 0.04411763, a: 0.534}
     - _hilightColor: {r: 0.9044118, g: 0.20583165, b: 0, a: 1}
