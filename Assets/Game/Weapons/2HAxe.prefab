@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 2300000}
   - component: {fileID: 9500000}
   m_Layer: 0
-  m_Name: mace_01_2
+  m_Name: 2HAxe
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -24,8 +24,8 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 100000}
-  m_LocalRotation: {x: -0.5, y: 0.49999997, z: -0.5, w: 0.50000006}
-  m_LocalPosition: {x: 0.39381912, y: 1.4107927, z: -6.050058}
+  m_LocalRotation: {x: -0.000000026692543, y: -0.7071068, z: -0.000000026692543, w: 0.7071068}
+  m_LocalPosition: {x: 0.35081527, y: 1.7095549, z: 1.2915795}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -45,7 +45,7 @@ MeshRenderer:
   m_LightProbeUsage: 0
   m_ReflectionProbeUsage: 1
   m_Materials:
-  - {fileID: 2100000, guid: 922861627c94d854aa4e21f371104571, type: 2}
+  - {fileID: 2100000, guid: f56e1658072d6eb40ad8569f17244b35, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -71,7 +71,7 @@ MeshFilter:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 100000}
-  m_Mesh: {fileID: 4300000, guid: 8fe29282299d9cf4ea320cfc23358793, type: 3}
+  m_Mesh: {fileID: 4300000, guid: 9a4648e1b5b04a642a4c595450173058, type: 3}
 --- !u!95 &9500000
 Animator:
   serializedVersion: 3
@@ -80,7 +80,7 @@ Animator:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 100000}
   m_Enabled: 1
-  m_Avatar: {fileID: 9000000, guid: 8fe29282299d9cf4ea320cfc23358793, type: 3}
+  m_Avatar: {fileID: 9000000, guid: 9a4648e1b5b04a642a4c595450173058, type: 3}
   m_Controller: {fileID: 0}
   m_CullingMode: 0
   m_UpdateMode: 0

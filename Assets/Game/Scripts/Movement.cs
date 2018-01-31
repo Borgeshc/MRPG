@@ -19,7 +19,6 @@ public class Movement : MonoBehaviour
     public AudioClip[] footsteps;
 
     public static bool hasTarget;
-    public bool isMobile;
 
     Vector3 input;
     Vector3 targetRotation;
@@ -46,9 +45,13 @@ public class Movement : MonoBehaviour
             enemies.Add(go.transform);
         }
 
-        print("Num of enemies " + enemies.Count);
-
         currentTargetDistance = 100;
+    }
+
+    public void SetWeaponValues(Weapon currentWeapon)
+    {
+        attackMoveSpeed = currentWeapon.moveSpeed;
+        attackDistance = currentWeapon.attackDistance;
     }
 
     void FixedUpdate ()
@@ -75,52 +78,22 @@ public class Movement : MonoBehaviour
 
         if (input != Vector3.zero)
         {
-
             targetRotation = Quaternion.LookRotation(input).eulerAngles;
             anim.SetBool("IsWalking", true);
             cc.SimpleMove(transform.forward * speed * Time.deltaTime);
         }
         else
             anim.SetBool("IsWalking", false);
-
-        if(!isMobile)
+        
+        if(!checkingForEnemies)
         {
-            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-            RaycastHit hit;
-
-            if (Physics.Raycast(ray, out hit, Mathf.Infinity, targetLayer))
-            {
-                if (hit.transform.tag.Equals("Enemy"))
-                {
-                    Vector3 direction = (hit.transform.position - transform.position).normalized;
-                    Quaternion lookRotation = Quaternion.LookRotation(new Vector3(direction.x, 0, direction.z));
-                    transform.rotation = Quaternion.Slerp(transform.rotation, lookRotation, Time.deltaTime * rotationSpeed);
-
-                    Cursor.SetCursor(attackCursor, Vector2.zero, CursorMode.Auto);
-                    hasTarget = true;
-                }
-            }
-            else
-            {
-                transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.Euler(targetRotation.x,
-                Mathf.Round(targetRotation.y / 45) * 45, targetRotation.z), Time.fixedDeltaTime * rotationSpeed);
-
-
-                Cursor.SetCursor(mainCursor, Vector2.zero, CursorMode.Auto);
-                hasTarget = false;
-            }
+            checkingForEnemies = true;
+            StartCoroutine(CheckForEnemies());
         }
-        else
-        {
-            if(!checkingForEnemies)
-            {
-                checkingForEnemies = true;
-                StartCoroutine(CheckForEnemies());
-            }
 
-            transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.Euler(targetRotation.x,
-            Mathf.Round(targetRotation.y / 45) * 45, targetRotation.z), Time.fixedDeltaTime * rotationSpeed);
-        }
+        transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.Euler(targetRotation.x,
+        Mathf.Round(targetRotation.y / 45) * 45, targetRotation.z), Time.fixedDeltaTime * rotationSpeed);
+        
     }
 
     Transform GetClosestEnemy(List<Transform> enemies)
