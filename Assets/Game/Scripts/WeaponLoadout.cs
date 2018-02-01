@@ -4,8 +4,8 @@ using UnityEngine;
 
 public class WeaponLoadout : MonoBehaviour
 {
-    [Header("Primary Weapon")]
-    public Weapon primaryWeapon;
+    [Header("Current Weapon")]
+    public Weapon currentWeapon;
     [Space, Header("Heavy Slot")]
     public Weapon heavySlot;            //Slot 1
     [Space, Header("Quick Slot")]
@@ -16,30 +16,36 @@ public class WeaponLoadout : MonoBehaviour
     public Weapon defensiveSlot;        //Slot 4
 
     [Space, Space]
-    public Animator anim;
-    public Collider damageCollider;
-    public TrailRenderer weaponTrail;
+    public Collider heavyDamageCollider;
+    public Collider quickDamageCollider;
+    public Collider defensiveDamageCollider;
 
     public AudioSource attackSource;
     public AudioClip[] missSounds;
 
+    TrailRenderer weaponTrail;
     Movement movement;
+    Animator anim;
 
-    Weapon currentWeapon;
 
     private void Start()
     {
+        anim = GetComponent<Animator>();
         movement = GetComponent<Movement>();
-        
-        heavySlot.Initialize(movement, this);
-        quickSlot.Initialize(movement, this);
-        rangedSlot.Initialize(movement, this);
-        defensiveSlot.Initialize(movement, this);
+
+        SetWeaponValues();
+        movement.SetWeaponValues(currentWeapon);
     }
 
     public void SetWeapon(int slotNumber)
     {
-        switch(slotNumber)
+
+        currentWeapon.model.SetActive(false);
+
+        if (currentWeapon.secondaryModel)
+            currentWeapon.secondaryModel.SetActive(false);
+
+        switch (slotNumber)
         {
             case 1:
                 currentWeapon = heavySlot;
@@ -55,13 +61,18 @@ public class WeaponLoadout : MonoBehaviour
                 break;
         }
 
+        currentWeapon.model.SetActive(true);
+
+        if (currentWeapon.secondaryModel)
+            currentWeapon.secondaryModel.SetActive(true);
+
         SetWeaponValues();
         movement.SetWeaponValues(currentWeapon);
     }
 
     void SetWeaponValues()
     {
-        anim = currentWeapon.anim;
+        anim.runtimeAnimatorController = currentWeapon.runtimeAnimator;
         weaponTrail = currentWeapon.weaponTrail;
     }
 
@@ -72,7 +83,19 @@ public class WeaponLoadout : MonoBehaviour
 
     public void DealDamage()
     {
-        damageCollider.enabled = true;
+        switch (currentWeapon.weaponType)
+        {
+            case Weapon.WeaponType.Heavy:
+                heavyDamageCollider.enabled = true;
+                break;
+            case Weapon.WeaponType.Quick:
+                quickDamageCollider.enabled = true;
+                break;
+            case Weapon.WeaponType.Defensive:
+                defensiveDamageCollider.enabled = true;
+                break;
+        }
+
 
         if(!Movement.hasTarget)
         {
@@ -83,16 +106,37 @@ public class WeaponLoadout : MonoBehaviour
 
     public void StopDealingDamage()
     {
-        damageCollider.enabled = false;
+        heavyDamageCollider.enabled = false;
+        quickDamageCollider.enabled = false;
+        defensiveDamageCollider.enabled = false;
     }
 
     public void ActivateTrail()
     {
         weaponTrail.enabled = true;
+
+        if (currentWeapon.secondaryWeaponTrail)
+            weaponTrail.enabled = true;
     }
 
     public void DeactivateTrail()
     {
         weaponTrail.enabled = false;
+
+        if (currentWeapon.secondaryWeaponTrail)
+            weaponTrail.enabled = false;
+    }
+
+    public void SpawnProjectile()
+    {
+        if(movement.currentTarget)
+        {
+            GameObject projectile = Instantiate(currentWeapon.projectile, currentWeapon.projectileSpawn.transform.position, currentWeapon.projectileSpawn.transform.rotation);
+
+            if (movement.currentTarget != null)
+                projectile.GetComponent<Projectile>().SetValues(movement.currentTarget, currentWeapon.damage);
+            else
+                projectile.GetComponent<Projectile>().SetValues(currentWeapon.damage);
+        }
     }
 }

@@ -2,8 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "Weapon")]
-public class Weapon : ScriptableObject
+public class Weapon : MonoBehaviour
 {
     public enum WeaponType
     {
@@ -16,26 +15,31 @@ public class Weapon : ScriptableObject
     public WeaponType weaponType;
 
     public GameObject model;
+    public GameObject secondaryModel;
+    public GameObject projectile;
+    public GameObject projectileSpawn;
     public int damage;
     public float attackFrequency;
     public float moveSpeed;
     public float attackDistance;
     public int numberOfAnimations;
     public TrailRenderer weaponTrail;
-    public Animator anim;
+    public TrailRenderer secondaryWeaponTrail;
+    public RuntimeAnimatorController runtimeAnimator;
 
     Movement move;
+    Animator anim;
     WeaponLoadout loadout;
 
     string activeAbility;
 
     bool abilityActive;
 
-    public void Initialize(Movement _move, WeaponLoadout _loadout)
+    public void Start()
     {
-        move = _move;
-        loadout = _loadout;
-
+        anim = transform.root.GetComponent<Animator>();
+        move = transform.root.GetComponent<Movement>();
+        loadout = transform.root.GetComponent<WeaponLoadout>();
         abilityActive = false;
     }
 
@@ -47,8 +51,8 @@ public class Weapon : ScriptableObject
             Movement.attacking = true;
 
             int randomAbility = Random.Range(0, numberOfAnimations);
-            anim.SetTrigger(weaponType.ToString() + randomAbility);
-            activeAbility = weaponType.ToString() + randomAbility;
+            anim.SetTrigger("Attack" + randomAbility);
+            activeAbility = "Attack" + randomAbility;
 
             CoroutineUtility.instance.StartCoroutine(AbilityCooldown());
         }

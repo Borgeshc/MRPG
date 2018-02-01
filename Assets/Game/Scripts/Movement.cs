@@ -31,14 +31,18 @@ public class Movement : MonoBehaviour
 
     public static List<Transform> enemies = new List<Transform>();
 
-    Transform currentTarget;
+    [HideInInspector]
+    public Transform currentTarget;
     float currentTargetDistance;
     float distance;
+
+    WeaponLoadout weaponLoadout;
 
     private void Start()
     {
         cc = GetComponent<CharacterController>();
         anim = GetComponent<Animator>();
+        weaponLoadout = GetComponent<WeaponLoadout>();
 
         foreach(GameObject go in GameObject.FindGameObjectsWithTag("Enemy"))
         {
@@ -56,17 +60,21 @@ public class Movement : MonoBehaviour
 
     void FixedUpdate ()
     {
+        if (currentTarget != null)
+            distance = Vector3.Distance(transform.position, currentTarget.transform.position);
+
         if (attacking)
         {
             anim.SetBool("IsWalking", true);
-            if (Vector3.Distance(transform.position, currentTarget.position) <= attackDistance && currentTarget != null && attacking)
+            if (distance <= attackDistance && currentTarget != null && attacking)
             {
                 Vector3 direction = (currentTarget.position - transform.position).normalized;
                 Quaternion lookRotation = Quaternion.LookRotation(new Vector3(direction.x, 0, direction.z));
                 transform.rotation = Quaternion.Slerp(transform.rotation, lookRotation, Time.deltaTime * rotationSpeed);
             }
-
+            
             cc.SimpleMove(transform.forward * attackMoveSpeed * Time.deltaTime);
+
             return;
         }
 
@@ -91,8 +99,9 @@ public class Movement : MonoBehaviour
             StartCoroutine(CheckForEnemies());
         }
 
-        transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.Euler(targetRotation.x,
-        Mathf.Round(targetRotation.y / 45) * 45, targetRotation.z), Time.fixedDeltaTime * rotationSpeed);
+        transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.Euler(targetRotation), Time.fixedDeltaTime * rotationSpeed);
+        //Quaternion.Euler(targetRotation.x,
+        //Mathf.Round(targetRotation.y / 45) * 45, targetRotation.z)
         
     }
 
@@ -125,7 +134,8 @@ public class Movement : MonoBehaviour
     IEnumerator CheckForEnemies()
     {
         currentTarget = GetClosestEnemy(enemies);
-        yield return new WaitForSeconds(.5f);
+
+        yield return new WaitForSeconds(.25f);
         checkingForEnemies = false;
     }
 }
