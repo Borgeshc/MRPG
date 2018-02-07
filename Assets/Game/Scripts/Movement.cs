@@ -56,7 +56,7 @@ public class Movement : MonoBehaviour
         if (attacking)
         {
             anim.SetBool("IsWalking", true);
-            if (Vector3.Distance(transform.position, currentTarget.position) <= attackDistance && currentTarget != null && attacking)
+            if (currentTarget != null && Vector3.Distance(transform.position, currentTarget.position) <= attackDistance && attacking)
             {
                 Vector3 direction = (currentTarget.position - transform.position).normalized;
                 Quaternion lookRotation = Quaternion.LookRotation(new Vector3(direction.x, 0, direction.z));
