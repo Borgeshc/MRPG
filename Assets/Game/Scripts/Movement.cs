@@ -33,8 +33,6 @@ public class Movement : MonoBehaviour
     public static List<Transform> enemies = new List<Transform>();
 
     Transform currentTarget;
-    float currentTargetDistance;
-    float distance;
 
     private void Start()
     {
@@ -45,10 +43,6 @@ public class Movement : MonoBehaviour
         {
             enemies.Add(go.transform);
         }
-
-        print("Num of enemies " + enemies.Count);
-
-        currentTargetDistance = 100;
     }
 
     void FixedUpdate ()
